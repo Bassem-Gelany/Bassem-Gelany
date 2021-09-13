@@ -1,0 +1,58 @@
+import numpy as np
+import pandas as pd
+
+#Question 1
+print(np.__version__)
+
+#Question 2
+print(pd.__version__)
+
+data = pd.read_csv("data.csv")
+print(data)
+
+#Question 3
+data_group = data.groupby('Make').MSRP.mean()
+print(data_group)
+
+#Question 4
+data_2015 = data[data['Year'] >= 2015]
+print(data_2015)
+print(data_2015.isnull().sum())
+
+#Question 5
+mean_hp1 = data['Engine HP'].mean()
+print(round(mean_hp1))
+
+data['Engine HP'].fillna(0.0)
+data['Engine HP'].fillna(data['Engine HP'].mean())
+
+mean_hp2= data['Engine HP'].mean()
+print(round(mean_hp2))
+
+#Question 6
+data = data[(data['Make'] == 'Rolls-Royce')]
+data = data[['Engine HP', 'Engine Cylinders', 'highway MPG']]
+print(data)
+
+data = data.drop_duplicates()
+print(data)
+
+X = np.array(data)
+print(X)
+
+XT = X.T
+print(XT)
+
+XTX = X.dot(XT)
+print(XTX)
+
+XTX_inverse = np.linalg.inv(XTX)
+print(XTX_inverse.sum())
+
+#Question 7
+y = np.array([1000, 1100, 900, 1200, 1000, 850, 1300])
+print(y)
+
+z =XTX_inverse.dot(XT)
+w = z.dot(y)
+print(w)
